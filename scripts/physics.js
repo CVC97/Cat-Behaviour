@@ -19,3 +19,6 @@ export class CatPotential {
         return this.g * (x**2-1) * x**2 * (x**2-this.delta) / (x**2+this.delta);
     }
 }
+
+
+// Euler-Maruyama integrator for the newtonian equation of motion of the cat
