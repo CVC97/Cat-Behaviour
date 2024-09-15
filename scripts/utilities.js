@@ -24,6 +24,30 @@ export function c2y(cy) {
 }
 
 
+// function to parse position and velocity (they are bound to certain limits, no fun allowed)
+export function parse_x(input_x) {
+    let x_limit = 1;
+    if (input_x < -x_limit) {
+        return -x_limit;
+    }
+    if (input_x > x_limit) {
+        return x_limit;
+    }
+    return input_x;
+}
+
+export function parse_vx(input_vx) {
+    let vx_limit = 1;
+    if (input_vx < -vx_limit) {
+        return -vx_limit;
+    }
+    if (input_vx > vx_limit) {
+        return vx_limit;
+    }
+    return input_vx;
+}
+
+
 // coordinate system class
 export class CoordinateSystem {
     ax2c = this.ax2c.bind(this);

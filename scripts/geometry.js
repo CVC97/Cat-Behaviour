@@ -1,4 +1,4 @@
-
+import { x2c, y2c, CoordinateSystem } from "./utilities.js"
 
 
 
@@ -13,6 +13,21 @@ export class FunctionPixel {
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         ctx.fill();
+    }
+}
+
+
+// take the cat image and put it on canvas
+export class CatImage {
+    constructor(ctx, coordinate_system, potential_function, ax) {
+        this.cx = coordinate_system.ax2c(ax);
+        this.cy = coordinate_system.ay2c(potential_function(ax));
+
+        let cat_image = new Image();
+        cat_image.src = "./images/cat1.png";
+        cat_image.onload = () => {
+            ctx.drawImage(cat_image, this.cx-32, this.cy-32);
+        }
     }
 }
 
