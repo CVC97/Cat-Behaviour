@@ -18,19 +18,13 @@ export class FunctionPixel {
 
 
 // take the cat image and put it on canvas
-export class CatImage {
-    constructor(ctx, coordinate_system, potential_function, ax) {
+export class DrawImage {
+    constructor(ctx, image, coordinate_system, potential_function, ax) {
         this.cx = coordinate_system.ax2c(ax);
         this.cy = coordinate_system.ay2c(potential_function(ax));
-
-        let cat_image = new Image();
-        cat_image.src = "./images/cat1.png";
-        cat_image.onload = () => {
-            ctx.drawImage(cat_image, this.cx-32, this.cy-32);
-        }
+        ctx.drawImage(image, this.cx-32, this.cy-32);
     }
 }
-
 
 
 // draws an arrow given start / end point, color, width, and stroke dash

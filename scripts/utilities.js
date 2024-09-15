@@ -48,6 +48,12 @@ export function parse_vx(input_vx) {
 }
 
 
+// function to parse time increment
+export function parse_dt(s_dt) {
+    return 0.025*10**(s_dt/10);
+}
+
+
 // coordinate system class
 export class CoordinateSystem {
     ax2c = this.ax2c.bind(this);
