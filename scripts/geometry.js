@@ -4,7 +4,6 @@ import { x2c, y2c, CoordinateSystem } from "./utilities.js"
 
 // ++++++++++ ANIMATED OBJECTS SECTION ++++++++++
 
-
 // draws a circle at canvas coordinate
 export class FunctionPixel {
     constructor(ctx, cx, cy, color) {

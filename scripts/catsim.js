@@ -3,7 +3,6 @@ import { x2c, y2c, parse_x, parse_vx, parse_dt, CoordinateSystem } from "./utili
 import { DrawImage } from "./geometry.js";
 
 
-
 // building canvas
 export const canvas = document.getElementById("CatCanvas");
 export const ctx = canvas.getContext("2d");
@@ -22,7 +21,7 @@ let delta_bonding = 0.5;                            // specific bonding strength
 
 // parameters of the system
 let epsilon_friction = 0.25;                        // friction coefficient epsilon           
-let sigma_noise = 1;                                // strength of the gaussian white noise
+let sigma_noise = 1.5;                                // strength of the gaussian white noise
 let call_strength = 0.25;                           // responsiveness of the cat towards calls
 let m_mass = 1;                                     // mass of the cat
 let force_params = [epsilon_friction, sigma_noise, m_mass];
@@ -41,7 +40,6 @@ let vx = 0.5;
 let state = [x, vx];
 
 let animation_state = 0;                            // sets the animation state (0 for STOPPED, 1 for RUNNING)
-let loading_state = 1;
 let raf;                                            // animation handler
 
 

@@ -1,6 +1,5 @@
 // ++++++++++ RANDOM NUMBER FUNCTIONS ++++++++++
 
-
 // generate random gaussion from Box-Muller transform
 export function get_random_gaussian(mean = 0, std = 1) {
     let u1 = 1 - Math.random();                                     // generate 2 random uniforms u1

@@ -4,7 +4,6 @@ import { get_random_gaussian } from "./rng.js";
 
 // ++++++++++ PHYSICS OF THE CAT BEHAVIOUR ++++++++++
 
-
 // potential class induced on the cat
 export class CatPotential {
     get_potential = this.get_potential.bind(this);

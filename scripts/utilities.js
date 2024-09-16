@@ -1,8 +1,8 @@
 import { FunctionPixel } from "./geometry.js";
 
 
-// ++++++++++ UTILITY FUNCTIONS AND DEFINITIONS ++++++++++
 
+// ++++++++++ UTILITY FUNCTIONS AND DEFINITIONS ++++++++++
 
 // global functions to transform calculation coordinates (center (0, 0), x-range [-8, 8], y-width [-5, 5])
 export function x2c(x) {
