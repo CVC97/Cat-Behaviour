@@ -54,6 +54,57 @@ export function parse_dt(s_dt) {
 }
 
 
+// number line class
+export class NumberLine {
+    nlx2c = this.nlx2c.bind(this);
+    nly0 = this.nly0.bind(this);
+
+    constructor(ctx, centre, x_length, x_range, x_label) {
+        this.ax_min = x_range[0];
+        this.ax_max = x_range[1];
+        this.ax_dist = this.ax_max - this.ax_min;
+
+        this.centre = centre;
+        this.x_dist = x_length[1] - x_length[0];
+
+        this.cx_centre = x2c(centre[0]);
+        this.cy_centre = y2c(centre[1]);
+        this.cx_low = x2c(centre[0] + x_length[0]);
+        this.cx_high = x2c(centre[0] + x_length[1]);
+
+        // x- and y-axis
+        ctx.beginPath();
+        ctx.moveTo(this.cx_low, this.cy_centre);
+        ctx.lineTo(this.cx_high, this.cy_centre);
+
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "grey";
+        ctx.setLineDash([]);
+        ctx.stroke();
+
+        // x- and y-label
+        ctx.font = "32px serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "grey";
+        ctx.fillText(x_label, this.cx_high + 30, this.cy_centre);
+    }
+
+
+    // convert ax coordinates to canvas coordinates
+    nlx2c(ax) {
+        let x = ax / this.ax_dist * this.x_dist + this.centre[0];
+        return x2c(x);
+    }
+
+
+    // return the canvas y coordinate
+    nly0() {
+        return this.cy_centre;
+    }
+}
+
+
 // coordinate system class
 export class CoordinateSystem {
     ax2c = this.ax2c.bind(this);

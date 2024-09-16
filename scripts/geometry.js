@@ -1,4 +1,4 @@
-import { x2c, y2c, CoordinateSystem } from "./utilities.js"
+import { x2c, y2c, NumberLine, CoordinateSystem } from "./utilities.js"
 import { manim_red } from "./catsim.js";
 
 
@@ -19,26 +19,27 @@ export class FunctionPixel {
 
 // take the cat image and put it on canvas
 export class DrawImage {
-    constructor(ctx, image, coordinate_system, potential_function, ax) {
-        this.cx = coordinate_system.ax2c(ax);
-        this.cy = coordinate_system.ay2c(potential_function(ax));
-        this.cy0 = coordinate_system.ay2c(0);
+    constructor(ctx, image, coordinate_system, number_line, potential_function, ax) {
+        this.ax_cx = coordinate_system.ax2c(ax);
+        this.ax_cy = coordinate_system.ay2c(potential_function(ax));
+        this.nl_cx = number_line.nlx2c(ax);
+        this.nl_cy = number_line.nly0();
 
         // dashed connector
         ctx.beginPath();
-        ctx.moveTo(this.cx, this.cy0);
-        ctx.lineTo(this.cx, this.cy);
-        ctx.lineWidth = 4;
+        ctx.moveTo(this.nl_cx, this.nl_cy);
+        ctx.lineTo(this.ax_cx, this.ax_cy);
+        ctx.lineWidth = 2;
         ctx.strokeStyle = "white";
         ctx.setLineDash([5, 5]); 
         ctx.stroke();      
 
         // cat image
-        ctx.drawImage(image, this.cx-32, this.cy0-32);
+        ctx.drawImage(image, this.nl_cx-32, this.nl_cy-32);
 
         // potential dot
         ctx.beginPath();
-        ctx.arc(this.cx, this.cy, 10, 0, 2 * Math.PI);
+        ctx.arc(this.ax_cx, this.ax_cy, 10, 0, 2 * Math.PI);
         ctx.fillStyle = "white";
         ctx.lineWidth = 1;
         ctx.fill();

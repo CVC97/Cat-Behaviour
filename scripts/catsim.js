@@ -1,5 +1,5 @@
 import { CatPotential, VerletMaruyama } from "./physics.js";
-import { x2c, y2c, parse_x, parse_vx, parse_dt, CoordinateSystem } from "./utilities.js"
+import { x2c, y2c, parse_x, parse_vx, parse_dt, NumberLine, CoordinateSystem } from "./utilities.js"
 import { DrawImage } from "./geometry.js";
 
 
@@ -47,7 +47,8 @@ let raf;                                            // animation handler
 // ++++++++++ MAIN SECTION ++++++++++
 
 // building coordinate system and potential
-let axis = new CoordinateSystem(ctx, [0, 0], [-6, 6], [-3, +3], [-1.3, 1.3], [-0.2, 0.2], "x", "V(x)");
+let axis = new CoordinateSystem(ctx, [0, 1], [-6, 6], [-2.5, +2.5], [-1.3, 1.3], [-0.2, 0.2], "x", "V(x)");
+let nline = new NumberLine(ctx, [0, -3], [-6, 6], [-1.3, 1.3], "x");
 let potential = new CatPotential(g_coupling, delta_bonding);
 let potential_function = axis.draw_function(ctx, potential.get_potential);
 
@@ -64,7 +65,7 @@ cat_image.src = "./images/cat1.png";
 // setting up integrator and place preloaded cat
 let verlet_maruyama = new VerletMaruyama(potential, bool_params, force_params, delta_t);
 cat_image.onload = () => {
-    new DrawImage(ctx, cat_image, axis, potential.get_potential, x);
+    new DrawImage(ctx, cat_image, axis, nline, potential.get_potential, x);
 }
 
 
@@ -81,7 +82,7 @@ function draw() {
     state = verlet_maruyama.step(state);
     x = state[0];
     vx = state[1];
-    new DrawImage(ctx, cat_image, axis, potential.get_potential, x);
+    new DrawImage(ctx, cat_image, axis, nline, potential.get_potential, x);
 
     // request new animation frame
     raf = window.requestAnimationFrame(draw);
@@ -108,7 +109,7 @@ function update_potential() {
 
     // setting up integrator and place cat
     verlet_maruyama = new VerletMaruyama(potential, bool_params, force_params, delta_t);
-    new DrawImage(ctx, cat_image, axis, potential.get_potential, x);
+    new DrawImage(ctx, cat_image, axis, nline, potential.get_potential, x);
 }
 
 
@@ -186,7 +187,7 @@ document.getElementById("reset_button").addEventListener("click", (event) => {
     vx = parse_vx(parseFloat(document.getElementById("init_vx").value));
     document.getElementById("init_vx").value = vx;
     state = [x, vx];
-    new DrawImage(ctx, cat_image, axis, potential.get_potential, x);
+    new DrawImage(ctx, cat_image, axis, nline, potential.get_potential, x);
 })
 
 
