@@ -97,7 +97,7 @@ function update_potential() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // build new potential
-    axis = new CoordinateSystem(ctx, [0, 0], [-6, 6], [-3, +3], [-1.3, 1.3], [-0.2, 0.2], "x", "V(x)");
+    axis = new CoordinateSystem(ctx, [0, 1], [-6, 6], [-2.5, +2.5], [-1.3, 1.3], [-0.2, 0.2], "x", "V(x)");
     nline = new NumberLine(ctx, [0, -3], [-6, 6], [-1.3, 1.3], "x");
     potential = new CatPotential(g_coupling, delta_bonding);
     potential_function = axis.draw_function(ctx, potential.get_potential); 
