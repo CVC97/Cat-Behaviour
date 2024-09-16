@@ -21,14 +21,15 @@ let g_coupling = 1;                                 // coupling constant between
 let delta_bonding = 0.5;                            // specific bonding strength between cat and humam
 
 // parameters of the system
-let epsilon_friction = 0.25;                           // friction coefficient epsilon           
+let epsilon_friction = 0.25;                        // friction coefficient epsilon           
 let sigma_noise = 1;                                // strength of the gaussian white noise
+let call_strength = 0.25;                           // responsiveness of the cat towards calls
 let m_mass = 1;                                     // mass of the cat
 let force_params = [epsilon_friction, sigma_noise, m_mass];
 
 // animation checks /params
 let bool_friction = 1;                              // bool: (how strong) will friction force be considered (USER OPTION)
-let bool_noise = 1;                                 // bool: (how strong) will gaussian white noise be considered (USER OPTION)
+let bool_noise = 0;                                 // bool: (how strong) will gaussian white noise be considered (USER OPTION)
 let bool_params = [bool_friction, bool_noise];
 
 // integration parameters
@@ -116,7 +117,31 @@ function update_potential() {
 // function to update physical parameters (updates pressure field) and new force parameters (updates integrator)
 function update_params() {
     delta_t = parse_dt(parseInt(document.getElementById("delta_t").value));
+    epsilon_friction = parseFloat(document.getElementById("number_friction").value);
+    sigma_noise = parseFloat(document.getElementById("number_noise").value);
 
+    force_params = [epsilon_friction, sigma_noise, m_mass]
+    verlet_maruyama = new VerletMaruyama(potential, bool_params, force_params, delta_t);
+}
+
+
+// function to update force parameters (aka bool values for coriolis force and friction force)
+function update_bool() {
+    if (document.getElementById("check_friction").checked == true) {
+        bool_friction = 1;
+        document.getElementById("number_friction").disabled = false;
+    } else {
+        bool_friction = 0;
+        document.getElementById("number_friction").disabled = true;
+    }
+    if (document.getElementById("check_noise").checked == true) {
+        bool_noise = 1;
+        document.getElementById("number_noise").disabled = false;
+    } else {
+        bool_noise = 0;
+        document.getElementById("number_noise").disabled = true;
+    }
+    bool_params = [bool_friction, bool_noise];
     verlet_maruyama = new VerletMaruyama(potential, bool_params, force_params, delta_t);
 }
 
@@ -138,6 +163,17 @@ document.getElementById("start_button").addEventListener("click", (event) => {
 })
 
 
+// call the cat button
+document.getElementById("call_button").addEventListener("click", (event) => {
+    x = state[0];
+    vx = state[1];
+    if (x < 0) {
+        vx += call_strength;
+    } else {
+        vx -= call_strength;
+    }
+    state = [x, vx];
+})
 
 
 // reset animation button
@@ -152,7 +188,7 @@ document.getElementById("reset_button").addEventListener("click", (event) => {
     vx = parse_vx(parseFloat(document.getElementById("init_vx").value));
     document.getElementById("init_vx").value = vx;
     state = [x, vx];
-    new Image(ctx, cat_image, axis, potential.get_potential, x);
+    new DrawImage(ctx, cat_image, axis, potential.get_potential, x);
 })
 
 
@@ -160,4 +196,9 @@ document.getElementById("reset_button").addEventListener("click", (event) => {
 document.getElementById("coupling_constant").addEventListener("change", update_potential);
 document.getElementById("bond_strength").addEventListener("change", update_potential);
 
+document.getElementById("number_friction").addEventListener("change", update_params);
+document.getElementById("number_noise").addEventListener("change", update_params);
 document.getElementById("delta_t").addEventListener("change", update_params);
+
+document.getElementById("check_friction").addEventListener("click", update_bool);
+document.getElementById("check_noise").addEventListener("click", update_bool);
