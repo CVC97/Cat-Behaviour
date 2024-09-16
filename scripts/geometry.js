@@ -1,4 +1,5 @@
 import { x2c, y2c, CoordinateSystem } from "./utilities.js"
+import { manim_red } from "./catsim.js";
 
 
 
@@ -21,7 +22,26 @@ export class DrawImage {
     constructor(ctx, image, coordinate_system, potential_function, ax) {
         this.cx = coordinate_system.ax2c(ax);
         this.cy = coordinate_system.ay2c(potential_function(ax));
-        ctx.drawImage(image, this.cx-32, this.cy-32);
+        this.cy0 = coordinate_system.ay2c(0);
+
+        // dashed connector
+        ctx.beginPath();
+        ctx.moveTo(this.cx, this.cy0);
+        ctx.lineTo(this.cx, this.cy);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "white";
+        ctx.setLineDash([5, 5]); 
+        ctx.stroke();      
+
+        // cat image
+        ctx.drawImage(image, this.cx-32, this.cy0-32);
+
+        // potential dot
+        ctx.beginPath();
+        ctx.arc(this.cx, this.cy, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "white";
+        ctx.lineWidth = 1;
+        ctx.fill();
     }
 }
 
