@@ -87,6 +87,7 @@ export class CoordinateSystem {
         ctx.lineTo(this.cx_centre, this.cy_high);
         ctx.lineWidth = 1;
         ctx.strokeStyle = "grey";
+        ctx.setLineDash([]);
         ctx.stroke();
 
         // x- and y-label
