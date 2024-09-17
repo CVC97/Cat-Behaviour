@@ -21,14 +21,14 @@ let delta_bonding = 0.5;                            // specific bonding strength
 
 // parameters of the system
 let epsilon_friction = 0.25;                        // friction coefficient epsilon           
-let sigma_noise = 1.5;                                // strength of the gaussian white noise
+let sigma_noise = 1.5;                              // strength of the gaussian white noise
 let call_strength = 0.25;                           // responsiveness of the cat towards calls
 let m_mass = 1;                                     // mass of the cat
 let force_params = [epsilon_friction, sigma_noise, m_mass];
 
 // animation checks /params
 let bool_friction = 1;                              // bool: (how strong) will friction force be considered (USER OPTION)
-let bool_noise = 0;                                 // bool: (how strong) will gaussian white noise be considered (USER OPTION)
+let bool_noise = 1;                                 // bool: (how strong) will gaussian white noise be considered (USER OPTION)
 let bool_params = [bool_friction, bool_noise];
 
 // integration parameters
